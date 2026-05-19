@@ -1,111 +1,141 @@
-# Frontend Mentor - Expenses chart component
+# Frontend Mentor — Expenses Chart Component
 
-![Design preview for the Expenses chart component coding challenge](preview.jpg)
+A solution to the [Expenses Chart Component challenge](https://www.frontendmentor.io/challenges/expenses-chart-component-e7yJBUdjwt) on Frontend Mentor.
 
-## Welcome! 👋
+---
 
-Thanks for checking out this front-end coding challenge.
+## Table of Contents
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+- [Overview](#overview)
+- [My Process](#my-process)
+  - [Built With](#built-with)
+  - [What I Learned](#what-i-learned)
+  - [Continued Development](#continued-development)
+  - [Useful Resources](#useful-resources)
+  - [AI Collaboration](#ai-collaboration)
+- [Author](#author)
 
-**To do this challenge, you need a decent understanding of HTML, CSS and JavaScript.**
+---
 
-## The challenge
+## Overview
 
-Your challenge is to build out this bar chart component and get it looking as close to the design as possible.
+### The Challenge
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+Users should be able to:
 
-We provide the data for the chart in a local `data.json` file. So you can use that to dynamically add the bars if you choose.
+- View the bar chart and hover over individual bars to see the correct amounts for each day
+- See the current day's bar highlighted in a different colour
+- View an optimal layout depending on their device's screen size
+- See hover states for all interactive elements
+- Use the provided JSON data file to dynamically size the bars
 
-Your users should be able to:
+### Links
 
-- View the bar chart and hover over the individual bars to see the correct amounts for each day
-- See the current day's bar highlighted in a different colour to the other bars
-- View the optimal layout for the content depending on their device's screen size
-- See hover states for all interactive elements on the page
-- **Bonus**: See dynamically generated bars based on the data provided in the local JSON file
+- **Solution:** [GitHub Repository](https://github.com/MathCat0000/expenses-chart-component)
+- **Live Site:** [GitHub Pages](https://mathcat0000.github.io/expenses-chart-component/)
 
-### Want some support on the challenge? 
+---
 
-[Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+## My Process
 
-## Where to find everything
+### Built With
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+- Semantic HTML5 markup
+- CSS custom properties
+- CSS Grid & Flexbox
+- Mobile-first workflow
+- Vanilla JavaScript
+- Fetch API & JSON-driven rendering
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+---
 
-If you would like the Figma design file to inspect the design in more detail, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+### What I Learned
 
-You will find all the required assets in the `/images` folder. The assets are already optimized.
+**Semantic HTML**
+I improved my understanding of separating layout wrappers from meaningful document sections. The outer component is a generic container, while the spending area is a meaningful `<section>` linked to its heading via `aria-labelledby`.
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+**Data-driven rendering**
+Instead of hardcoding chart items, JavaScript fetches `data.json`, calculates proportional bar heights, and renders each bar dynamically:
 
-## Using AI coding assistants
+```js
+const maxAmount = Math.max(...data.map((item) => item.amount));
+const height = (item.amount / maxAmount) * 100;
+```
 
-We've included two files to help you if you're using AI coding assistants (like Claude, GitHub Copilot, Cursor, etc.) while working on this challenge:
+**Tooltip positioning**
+A key CSS insight was that tooltip positioning depends on the correct reference element. Each tooltip needs a wrapper whose height matches the bar's calculated height:
 
-- `AGENTS.md` - Contains detailed instructions for AI assistants on how to help you with this challenge. It's tailored to this challenge's difficulty level, so the AI will provide guidance appropriate to your learning stage—offering more support for beginner challenges and encouraging more independence on advanced ones.
-- `CLAUDE.md` - A pointer file that directs Claude-based tools to the AGENTS.md instructions.
+```html
+<div class="chart-item__bar-wrapper" style="--bar-height: 66.7%;">
+  <span class="chart-item__tooltip">$34.91</span>
+  <div class="chart-item__bar" aria-hidden="true"></div>
+</div>
+```
 
-**How to use them:** You don't need to do anything! These files are automatically detected by most AI coding tools. The AI will read them and adjust its behavior to be a better learning partner—guiding you toward solutions rather than just giving you the answers.
+**Transient vs. persistent UI state**
+Hover and focus are handled with CSS; click-persistent tooltips are handled by toggling an `.is-selected` class with JavaScript:
 
-**Note:** These files are designed to help you *learn*, not to do the work for you. The AI is instructed to ask questions, give hints, and explain concepts rather than writing complete solutions.
+```js
+const isAlreadySelected = chartItem.classList.contains("is-selected");
+chartList.querySelectorAll(".chart-item.is-selected").forEach((item) => {
+  item.classList.remove("is-selected");
+});
+if (!isAlreadySelected) {
+  chartItem.classList.add("is-selected");
+}
+```
 
-## Building your project
+**Async JavaScript**
+I practiced a minimal async pattern using `fetch()`, `await`, `response.json()`, and basic error handling.
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+---
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+### Continued Development
 
-## Deploying your project
+In future projects I want to build a more minimal, self-sustained frontend workflow with internal notes, reusable checklists, and debugging patterns. Areas I want to keep improving:
 
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
+- **CSS layout ownership** — deciding which element should own spacing, width, height, alignment, and positioning
+- **CSS state taxonomy** — hover, focus, active, selected, hidden, visible, and disabled
+- **CSS transitions and interaction feedback**
+- **Tooltip and floating UI positioning**
+- **Percentage height chains and parent-child sizing**
+- **JavaScript async patterns** — `fetch()`, `try...catch`, and DOM rendering
+- **JavaScript state management** for simple UI interactions
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+---
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://www.frontendmentor.io/guides/hosting-your-solution).
+### Useful Resources
 
-## Create a custom `README.md`
+| Resource | Why it helped |
+|---|---|
+| [CSS-Tricks — A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) | Reviewed Flexbox alignment and vertical/horizontal positioning inside the chart layout |
+| [Learn CSS Grid](https://learncssgrid.com/) | Helped reason about the seven-column chart structure |
+| [MDN — Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) | Explained how to load `data.json` asynchronously and render from external data |
+| [MDN — CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) | Useful for design tokens and passing dynamic bar heights via inline CSS variables |
+| [MDN — CSS Position](https://developer.mozilla.org/en-US/docs/Web/CSS/position) | Clarified absolute positioning for tooltips and why a positioned wrapper was needed |
+| [MDN — CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout) | Reinforced Grid for the seven-column layout and distributing vs. aligning content |
+| [MDN — Basic Concepts of Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox) | Reinforced Flexbox as a one-dimensional tool, especially for bottom-aligning bars |
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+---
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+### AI Collaboration
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+I used ChatGPT as a debugging and reasoning assistant during this project.
 
-## Submitting your solution
+The most useful use cases were:
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://www.frontendmentor.io/guides/how-to-submit-solutions) for tips on how to do this.
+- Breaking the component into HTML, CSS, and JavaScript responsibilities
+- Validating my mobile-first workflow during the build
+- Debugging CSS layout ownership issues
+- Understanding why the tooltip needed a wrapper to follow the dynamic bar height
+- Separating hover/focus CSS states from click-persistent JavaScript state
+- Extracting an error taxonomy after the project was completed
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+I wrote, tested, and debugged the implementation myself. AI was most useful when I used it to isolate the *principle* behind a bug rather than copying a complete solution.
 
-## Sharing your solution
+---
 
-There are multiple places you can share your solution:
+## Author
 
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community). 
-2. Share on [X (formerly Twitter)](https://x.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in your post. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on [LinkedIn](https://www.linkedin.com/company/frontend-mentor/).
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
-# expenses-chart-component
+- **GitHub** — [@MathCat0000](https://github.com/MathCat0000)
+- **Frontend Mentor** — [@MathCat0000](https://www.frontendmentor.io/profile/MathCat0000)
