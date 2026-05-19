@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Expenses chart component | Marcello Betti </title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css_reset_base.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <main class="page_shell">
+
+    <div class="expense-card">
+
+      <header class="balance-card">
+
+        <div class="balance-card__content">
+
+          <p class="balance-card__label">My balance</p>
+
+          <p class="balance-card__amount">$921.48</p>
+
+        </div>
+
+        <svg class="balance-card__logo" width="62" height="48" viewBox="0 0 72 48" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true" focusable="false">
+
+          <g fill="none" fill-rule="evenodd">
+
+            <circle fill="#382314" cx="48" cy="24" r="24" />
+
+            <circle stroke="#FFF" stroke-width="2" cx="24" cy="24" r="23" />
+
+          </g>
+        </svg>
+      </header>
+      <section class="spending-panel" aria-labelledby="spending-title">
+        <h1 id="spending-title">Spending - Last 7 days</h1>
+        <ul class="chart-list" aria-label="Spending for the last 7 days">
+
+        </ul>
+        <footer class="monthly-summary">
+          <div class="monthly-summary__total">
+            <p class="monthly-summary__label">Total this month</p>
+            <p class="monthly-summary__amount">$478.33</p>
+
+          </div>
+          <div class="monthly-summary__comparison">
+            <p class="monthly-summary__percentage">+2.4%</p>
+
+            <p class="monthly-summary__label">from last month</p>
+
+          </div>
+        </footer>
+      </section>
+
+    </div>
+
+  </main>
+
+</body>
+
+</html>

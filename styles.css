@@ -1,0 +1,366 @@
+/* =========================================================
+   1. DESIGN TOKENS
+   ========================================================= */
+
+:root {
+
+
+  /* Colors - Primary */
+  --color-red-500: hsl(10, 79%, 65%);
+  --color-blue-300: hsl(186, 34%, 65%);
+
+  /* Colors - Neutral */
+  --color-brown-950: hsl(25, 47%, 15%);
+  --color-brown-400: hsl(28, 10%, 53%);
+  --color-red-100: hsl(26, 66%, 93%);
+  --color-white: hsl(0, 0%, 100%);
+
+  /* Semantic Colors */
+  --color-bg: var(--color-red-100);
+  --color-surface: var(--color-white);
+  --color-balance-bg: var(--color-red-500);
+  --color-chart-bar: var(--color-red-500);
+  --color-chart-bar-current: var(--color-blue-300);
+
+  --color-text-strong: var(--color-brown-950);
+  --color-text-muted: var(--color-brown-400);
+  --color-text-inverse: var(--color-white);
+
+  --color-divider: hsla(28, 10%, 53%, 0.25);
+
+  /* Typography */
+  --font-sans: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --text-body: 1.125rem; /* 18px */
+  --text-sm: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+
+  --font-regular: 400;
+  --font-bold: 700;
+
+  --leading-normal: 1.5;
+  --leading-tight: 1.1;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Layout */
+  --card-max-width: 33.75rem; /* 540px */
+  --page-padding: 1rem;
+
+  /* Radius */
+  --radius-sm: 0.20rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 999px;
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+
+   body {
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--font-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-text-strong);
+  background-color: var(--color-bg);
+}
+
+/* =========================================================
+   3. PAGE SHELL
+   ========================================================= */
+
+   .page_shell {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: var(--space-8) var(--page-padding);
+   }
+
+/* =========================================================
+   4. EXPENSE CARD
+   ========================================================= */
+   .expense-card {
+    
+      width: min(100%, var(--card-max-width));
+      display: grid;
+      gap: var(--space-4);
+   }
+
+/* =========================================================
+   5. BALANCE CARD
+   ========================================================= */
+
+   .balance-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--page-padding);
+    color:var(--color-white);
+    background-color: var(--color-balance-bg);
+    border-radius: var(--radius-md);
+   }
+
+   /* it is useful? */
+   .balance-card__content {
+    display: grid;
+    gap: var(--space-1);
+   }
+  
+  .balance-card__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-inverse);
+
+}
+
+   .balance-card__amount {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+   }
+
+/* =========================================================
+   6. SPENDING PANEL
+   ========================================================= */
+   .spending-panel {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-5);
+    padding-top: var(--space-8);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    
+   }
+
+   #spending-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    padding-bottom: var(--space-4);
+   }
+/* =========================================================
+   7. CHART
+   ========================================================= */
+
+.chart-list {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: var(--space-3);
+  min-height: 14rem;
+}
+
+.chart-item {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.chart-item__bar-slot {
+
+  display: flex;
+
+  align-items: end;
+
+  justify-content: center;
+
+  width: 100%;
+
+  height: 10rem;
+
+}
+
+.chart-item__bar-wrapper {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: end;
+
+  justify-content: center;
+
+  width: 2.15rem;
+
+  height: var(--bar-height);
+
+  min-height: 0.25rem;
+
+}
+
+.chart-item__bar {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  background-color: var(--color-chart-bar);
+
+  border-radius: var(--radius-sm);
+
+  cursor: pointer;
+
+}
+
+.chart-item__tooltip {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  padding: var(--space-2);
+  color: var(--color-text-inverse);
+  background-color: var(--color-text-strong);
+  border-radius: var(--radius-md);
+
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  white-space: nowrap;
+
+  transition:
+    opacity 160ms ease,
+    visibility 160ms ease;
+}
+
+
+
+.chart-item--current .chart-item__bar {
+  background-color: var(--color-chart-bar-current);
+}
+
+.chart-item:hover .chart-item__bar,
+.chart-item:focus-within .chart-item__bar,
+.chart-item.is-selected .chart-item__bar {
+  opacity: 0.75;
+}
+
+.chart-item:hover .chart-item__tooltip,
+.chart-item:focus-within .chart-item__tooltip,
+.chart-item.is-selected .chart-item__tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.chart-item__day {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}/* =========================================================
+   8. MONTHLY SUMMARY
+   ========================================================= */
+.monthly-summary {
+
+  display: flex;
+
+  align-items: end;
+
+  justify-content: space-between;
+
+  gap: var(--space-4);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-3);
+  border-top: 1px solid var(--color-divider);
+
+}
+
+.monthly-summary__total {
+
+  display: grid;
+  gap: var(--space-2);
+
+}
+
+.monthly-summary__comparison {
+
+  display: grid;
+  justify-items: end;
+  text-align: right;
+  gap: var(--space-1);
+
+}
+
+.monthly-summary__label {
+
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-tight);
+
+}
+
+
+.monthly-summary__amount {
+
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+
+}
+
+.monthly-summary__percentage {
+
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+
+}
+
+
+@media (min-width: 24.375rem) {
+  .chart-item__bar-wrapper {
+    width: 2.8rem;
+  }
+}
+
+
+@media (min-width: 48rem) {
+  .expense-card {
+    max-width: 33.75rem;
+    gap: var(--space-5);
+  }
+
+  .balance-card {
+    padding: var(--space-6) var(--space-8);
+    border-radius: var(--radius-xl);
+  }
+
+  .spending-panel {
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+  }
+
+  #spending-title {
+    font-size: var(--text-xl);
+  }
+
+  .chart-item__bar-wrapper {
+    width: 3.125rem;
+  }
+
+  .monthly-summary__amount {
+    font-size: 3rem;
+  }
+}
+
